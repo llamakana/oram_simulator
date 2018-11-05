@@ -27,6 +27,8 @@ Priority TODO:
   
   Record stash size after accesses / statistics
 
+  Memory profiling / optimizing
+
 Soon TODO:
   
   Vary bucket size across levels
