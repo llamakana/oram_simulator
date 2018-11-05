@@ -19,7 +19,7 @@ Priority TODO:
 
   ORAM class with subclasses: Ring, Path, Infinity
   
-  Reverse Lexicographic Eviction Order
+  Reverse Lexicographic Eviction Order (Ring is currently running a randomzied eviction ever A accesses)
   
   Convert tree to NumPy array
   
