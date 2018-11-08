@@ -4,6 +4,7 @@ import random as rand
 # from oram import Node
 from oram import Oram
 from oram import Ring
+from oram import Path
 import math
 import sys
 
@@ -14,11 +15,7 @@ def access_n(oram,rounds):
         for j in range(1,oram.n+1):
             oram.access(j)
         oram.print_occupancies()
-    # for i in range(1, n+1):
-    #     if (i%1000==0):
-    #         print("accessing ", i)
-    #     oram.access(i%oram.n)
-    # oram.print_occupancies()
+
 
 # levels are 0,..l
 # total number of buckets in tree is 2**(l+1)-1
