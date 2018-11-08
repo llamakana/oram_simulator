@@ -13,18 +13,16 @@ Ex:
 
 This will initialize the oram to a ring oram with distinct `n=a*2^(l-1)` real buckets.
 
-You can inspect the oram stash, position map, and tree with `oram.stash`,`oram.pos_map`,`oram.tree`
+You can inspect the buckets (stash is bucket 0) and position map with `oram.buckets`,`oram.pos_map`
+
+For ring oram, you can also inspect the counts with `oram.counts`
 
 Priority TODO:
 
-  ORAM class with subclasses: Ring, Path, Infinity
+  ORAM class with subclasses: Path, Infinity
   
-  Reverse Lexicographic Eviction Order (Ring is currently running a randomzied eviction ever A accesses)
-  
-  Convert tree to NumPy array
-  
-  Change tree so stash is at 0 (will make indexing easier later), change functions appropriately
-  
+  Reverse Lexicographic Eviction Order (Ring is currently running a randomized eviction ever A accesses)
+    
   Record stash size after accesses / statistics
 
   Memory profiling / optimizing
@@ -34,3 +32,5 @@ Soon TODO:
   Vary bucket size across levels
   
   Switch from using python -i to getting command line arguments?
+  
+  Convert tree to NumPy array?
