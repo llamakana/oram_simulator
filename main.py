@@ -4,7 +4,8 @@ import random as rand
 # from oram import Node
 from oram import Oram
 from oram import Ring
-from oram import Path
+from path import Path
+from path import PaInf
 import math
 import sys
 
