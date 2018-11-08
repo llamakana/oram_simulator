@@ -19,7 +19,7 @@ For ring oram, you can also inspect the counts with `oram.counts`
 
 Priority TODO:
 
-  ORAM class with subclasses: Path, Infinity
+  ORAM class with subclasses: Infinity
   
   Reverse Lexicographic Eviction Order (Ring is currently running a randomized eviction ever A accesses)
     
