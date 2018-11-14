@@ -1,5 +1,6 @@
 
 import random as rand
+# from memory_profiler import profile
 
 class Oram:
     def __init__(self, l, z, n=None):
@@ -25,6 +26,33 @@ class Oram:
         for i in range(len(self.buckets)):
             print("Bucket", i, self.buckets[i])
 
+    def max_rooted_subtree_size_and_depth(self):
+        total_size = 0
+        max_depth = 0
+        not_empty = True
+        current_level = -1
+        nodes_in_level = 1
+        idx = 0
+        while not_empty:
+            current_level += 1
+            nodes_in_level = 2**current_level
+            old_size = total_size
+            for i in range(nodes_in_level):
+                idx += 1
+                if (idx == len(self.buckets)):
+                    return (total_size, max_depth)
+                if len(self.buckets[idx])==self.z:
+                    print(total_size, idx, self.buckets[idx])
+                    total_size += 1
+                    max_depth = current_level
+                if i==(nodes_in_level-1):
+                    if total_size == old_size:
+                        print(self.buckets[:2**(max_depth+1)])
+                        return (total_size, max_depth)
+
+        return (-1,-1)
+
+
     def get_path(self, leaf):
         i = leaf
         path = [leaf]
@@ -37,7 +65,6 @@ class Oram:
         return path
 
 
-
 class Ring(Oram):
     def __init__(self, l, a, s, z):
         super().__init__(l, z)
@@ -47,16 +74,25 @@ class Ring(Oram):
         self.n = a*(2**(l-1))
         self.round = 0
         self.g = 0
+        self.order = []
+#self.g will keep track of where in self.order to access which leaf is next for eviction
+
+# n is a power of 2
+# maybe this isn't exact rev lex but it achieves the same thing
+# i.e. touching a bucket at level i only once ever 2^i evicts
+    def init_evict_order(self):
+        ls = [bin(i)[2:] for i in range(2**self.l)]
+        ls = [i[::-1] for i in ls]
+        ls = sorted(ls)
+        ls = [i[::-1] for i in ls]
+        ls = [int(i,2) for i in ls]
+        self.order = ls
 
     def evict(self):
-        # leaf = 2**self.l + self.g
-        # path = self.get_path(leaf)
-        # print("evicting from ", leaf)
-        # self.g += 1
-        # self.g = self.g % (2**self.l)
 
-        #randomized evict for now
-        leaf = rand.randint(2**self.l, 2**(self.l+1)-1)
+        leaf = 2**self.l + self.order[self.g]
+        self.g += 1
+        self.g = self.g % (2**self.l)
         path = self.get_path(leaf)
 
         # Read path into stash
@@ -92,8 +128,6 @@ class Ring(Oram):
                 available_space -= 1
             self.buckets[0].difference_update(self.buckets[current_bucket])
             # print("new len", len(stash_paths))
-            del stash_paths
-            del add_to_bucket
             i += 1
 
         return
@@ -123,12 +157,9 @@ class Ring(Oram):
                         add_to_bucket = add_to_bucket[1:]
                     j += 1
                 self.buckets[0].difference_update(self.buckets[current_bucket])
-            del stash_paths
-            del add_to_bucket
             i += 1
 
         return
-
 
     def access(self, idx):
         leaf = self.pos_map[idx]

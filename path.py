@@ -27,14 +27,13 @@ class Path(Oram):
             current_bucket = current_path[i]
 
             add_to_bucket = []
+            print(add_to_bucket)
             stash_paths = {}
             for b in self.buckets[0]:
                 stash_paths[b] = self.get_path(self.pos_map[b])
-
             for a,p in stash_paths.items():
                 if p[i] == current_bucket:
                     add_to_bucket.append(a)
-
             available_space = self.z - len(self.buckets[current_bucket])
             # print(self.tree[current_bucket].real_blocks, available_space)
             j = len(add_to_bucket) - 1
@@ -45,8 +44,6 @@ class Path(Oram):
                 available_space -= 1
             self.buckets[0].difference_update(self.buckets[current_bucket])
             # print("new len", len(stash_paths))
-            del stash_paths
-            del add_to_bucket
             i += 1
 
         return
@@ -55,7 +52,6 @@ class PaInf(Path):
     def __init__(self, l, z, n):
         super().__init__(l, z, n)
         self.z = -1
-
 
 
     def evict(self, current_path):
@@ -75,8 +71,6 @@ class PaInf(Path):
             self.buckets[current_bucket] = add_to_bucket
             self.buckets[0].difference_update(add_to_bucket)
             # print("new len", len(stash_paths))
-            del stash_paths
-            del add_to_bucket
             i += 1
 
         return
