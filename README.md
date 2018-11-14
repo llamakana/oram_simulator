@@ -27,4 +27,3 @@ Soon TODO:
   
   Switch from using python -i to getting command line arguments?
   
-  Convert tree to NumPy array?
