@@ -19,11 +19,11 @@ For ring oram, you can also inspect the counts with `oram.counts`
 
 Priority TODO:
 
-  ORAM class with subclasses: Path, Infinity
+  ORAM class with subclasses: Infinity (Ring)
   
-  Reverse Lexicographic Eviction Order (Ring is currently running a randomized eviction ever A accesses)
+  Reverse Lexicographic Eviction Order (Kyle)
     
-  Record stash size after accesses / statistics
+  Record sizes of full rooted subtrees after accesses
 
   Memory profiling / optimizing
 
