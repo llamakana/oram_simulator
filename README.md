@@ -20,17 +20,10 @@ For ring oram, you can also inspect the counts with `oram.counts`
 Priority TODO:
 
   ORAM class with subclasses: Infinity (Ring)
-  
-  Reverse Lexicographic Eviction Order (Kyle)
-    
-  Record sizes of full rooted subtrees after accesses
-
+  Vary bucket size across levels    
   Memory profiling / optimizing
 
 Soon TODO:
   
-  Vary bucket size across levels
-  
   Switch from using python -i to getting command line arguments?
   
-  Convert tree to NumPy array?
