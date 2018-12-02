@@ -27,7 +27,7 @@ class Path(Oram):
             current_bucket = current_path[i]
 
             add_to_bucket = []
-            print(add_to_bucket)
+            # print(add_to_bucket)
             stash_paths = {}
             for b in self.buckets[0]:
                 stash_paths[b] = self.get_path(self.pos_map[b])
@@ -45,7 +45,6 @@ class Path(Oram):
             self.buckets[0].difference_update(self.buckets[current_bucket])
             # print("new len", len(stash_paths))
             i += 1
-
         return
 
 class PaInf(Path):
@@ -74,3 +73,28 @@ class PaInf(Path):
             i += 1
 
         return
+
+
+    def max_rooted_subtree_size_and_depth(self, z):
+        total_size = 0
+        max_depth = 0
+        not_empty = True
+        current_level = -1
+        nodes_in_level = 1
+        idx = 0
+        while not_empty:
+            current_level += 1
+            nodes_in_level = 2**current_level
+            old_size = total_size
+            for i in range(nodes_in_level):
+                idx += 1
+                if (idx == len(self.buckets)):
+                    return (total_size, max_depth)
+                if len(self.buckets[idx])==z:
+                    total_size += 1
+                    max_depth = current_level
+                if i==(nodes_in_level-1):
+                    if total_size == old_size:
+                        return (total_size, max_depth)
+
+        return (-1,-1)

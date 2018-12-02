@@ -26,32 +26,30 @@ class Oram:
         for i in range(len(self.buckets)):
             print("Bucket", i, self.buckets[i])
 
-    def max_rooted_subtree_size_and_depth(self):
-        total_size = 0
-        max_depth = 0
-        not_empty = True
-        current_level = -1
-        nodes_in_level = 1
-        idx = 0
-        while not_empty:
-            current_level += 1
-            nodes_in_level = 2**current_level
-            old_size = total_size
-            for i in range(nodes_in_level):
-                idx += 1
-                if (idx == len(self.buckets)):
-                    return (total_size, max_depth)
-                if len(self.buckets[idx])==self.z:
-                    print(total_size, idx, self.buckets[idx])
-                    total_size += 1
-                    max_depth = current_level
-                if i==(nodes_in_level-1):
-                    if total_size == old_size:
-                        print(self.buckets[:2**(max_depth+1)])
-                        return (total_size, max_depth)
-
-        return (-1,-1)
-
+    # def max_rooted_subtree_size_and_depth(self, z):
+    #     total_size = 0
+    #     max_depth = 0
+    #     not_empty = True
+    #     current_level = -1
+    #     nodes_in_level = 1
+    #     idx = 0
+    #     while not_empty:
+    #         current_level += 1
+    #         nodes_in_level = 2**current_level
+    #         old_size = total_size
+    #         for i in range(nodes_in_level):
+    #             idx += 1
+    #             if (idx == len(self.buckets)):
+    #                 return (total_size, max_depth)
+    #             if len(self.buckets[idx])==self.z:
+    #                 total_size += 1
+    #                 max_depth = current_level
+    #             if i==(nodes_in_level-1):
+    #                 if total_size == old_size:
+    #                     return (total_size, max_depth)
+    #
+    #     return (-1,-1)
+    #
 
     def get_path(self, leaf):
         i = leaf
@@ -63,6 +61,23 @@ class Oram:
                 i = (i-1)//2
             path = path + [i]
         return path
+
+    def get_stats(self):
+        num_full_buckets = [0] * (self.l+1)
+        total_level_occupancy = [0] * (self.l+1)
+        for i in range(self.l+1):
+            first_idx = 2**i
+            last_idx = 2**(i+1)-1
+            total_full = 0
+            current_occupancy = 0
+            for j in range(first_idx, last_idx + 1):
+                size = len(self.buckets[j])
+                current_occupancy += size
+                if (size==self.z):
+                    total_full += 1
+            num_full_buckets[i] = total_full
+            total_level_occupancy[i] = current_occupancy
+        return (num_full_buckets, total_level_occupancy)
 
 
 class Ring(Oram):
